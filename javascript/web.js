@@ -4,7 +4,7 @@ $( document ).ready(function() {
 
   function renderButtons() {
 
-    //$("#animals-view").empty();
+    $("#animals-view").empty();
 
     for (var i = 0; i < animalsArray.length; i++) {
       var animalsButton = $("<button>");
@@ -15,7 +15,7 @@ $( document ).ready(function() {
     }
   }
   
-  $("button").on("click", function() {
+  function displayAnimals() {
     var animal = $(this).attr("data-name");
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
       animal + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -28,6 +28,7 @@ $( document ).ready(function() {
     .done(function(response) {
 
       var results = response.data;
+
       for (var i = 0; i < results.length; i++) {
         var gifDiv = $("<div class='item'>");
         var rating = results[i].rating;
@@ -39,9 +40,9 @@ $( document ).ready(function() {
         $("#gifs-appear-here").prepend(gifDiv);
       }
     });
-  });
+  }
 
-  $("#add-animal").on("click", function() {
+  $("#add-animal").on("click", function(event) {
 
     event.preventDefault();
 
@@ -54,6 +55,8 @@ $( document ).ready(function() {
     newAnimalButton.text(animalUserInput);
     $("#animals-view").append(newAnimalButton); */
   })
+
+  $(document).on("click", ".gif", displayAnimals);
   renderButtons();
 
 });
