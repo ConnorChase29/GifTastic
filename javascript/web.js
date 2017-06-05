@@ -33,8 +33,14 @@ $( document ).ready(function() {
         var gifDiv = $("<div class='item'>");
         var rating = results[i].rating;
         var p = $("<p>").text("Rating: " + rating);
+
+
+        // Somewhere in these two lines of code I would have to set the data still and animation properties, but no clue.
         var animalImage = $("<img>");
         animalImage.attr("src", results[i].images.fixed_height.url);
+
+
+
         gifDiv.append(p);
         gifDiv.append(animalImage);
         $("#gifs-appear-here").prepend(gifDiv);
@@ -49,14 +55,20 @@ $( document ).ready(function() {
     var animalUserInput = $("#animal-input").val().trim();
     animalsArray.push(animalUserInput);
     renderButtons();
-    /* var newAnimalButton = $("<button>");
-    newAnimalButton.addClass("gif");
-    newAnimalButton.attr("data-name", animalUserInput);
-    newAnimalButton.text(animalUserInput);
-    $("#animals-view").append(newAnimalButton); */
   })
 
   $(document).on("click", ".gif", displayAnimals);
   renderButtons();
 
+  $(".gif").on("click", function() {
+    var state = $(this).attr("data-state");
+
+    if (state === "still") {
+      $(this).attr("src", $(this).attr("data-animate"));
+      $(this).attr("data-state", "animate");
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
+  });
 });
